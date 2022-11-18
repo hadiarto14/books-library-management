@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" [hidden]="!isLoggedin">
+  <div class="container">
+    <a class="navbar-brand">Library Management</a>
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+      <ul class="navbar-nav m-auto">
+        <li class="nav-item active"><a href="#" class="nav-link">Home</a></li>
+        <li class="nav-item dropdown" *ngIf="admin">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            >Management</a
+          >
+          <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="admin/book">Book</a></li>
+            <li><a class="dropdown-item" href="admin/category">Category</a></li>
+            <li><a class="dropdown-item" href="admin/user">User</a></li>
+          </ul>
+        </li>
+        <li class="nav-item" *ngIf="admin">
+          <a href="admin/borrowing" class="nav-link">Borrow</a>
+        </li>
+        <li class="nav-item" *ngIf="admin">
+          <a href="admin/return-book" class="nav-link">Return</a>
+        </li>
+      </ul>
+    </div>
+    <div class="dropdown" *ngIf="isLoggedin">
+      <p
+        class="dropdown-toggle ts-6 m-0"
+        type="button"
+        data-bs-toggle="dropdown"
+        style="color: white;"
+      >
+        <span class="user-name ms-1">{{ user }}</span>
+      </p>
+      
+      <ul
+        class="dropdown-menu dropdown-menu-dark"
+        aria-labelledby="dropdownMenuButton1"
+      >
+        <li>
+          <a class="dropdown-item mb-2" (click)="logout()"
+            ><i class="bi bi-power me-2"></i>Logout</a
+          >
+        </li>
+      </ul>
+    </div>
+    <button routerLink="login" class="m-0" *ngIf="!isLoggedin">
+      Login
+    </button>
+  </div>
+</nav>

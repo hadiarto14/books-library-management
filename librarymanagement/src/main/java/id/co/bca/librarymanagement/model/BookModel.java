@@ -1,6 +1,13 @@
 package id.co.bca.librarymanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "book")
@@ -27,6 +34,22 @@ public class BookModel {
 
     @Column(name = "availability")
     private Boolean availability;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryModel category;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "book")
+    private List<BorrowingModel> borrowingModels;
+
+    public List<BorrowingModel> getBorrowingModels() {
+        return borrowingModels;
+    }
+
+    public void setBorrowingModels(List<BorrowingModel> borrowingModels) {
+        this.borrowingModels = borrowingModels;
+    }
 
     public int getId() {
         return id;
@@ -82,5 +105,13 @@ public class BookModel {
 
     public void setAvailability(Boolean availability) {
         this.availability = availability;
+    }
+
+    public CategoryModel getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryModel category) {
+        this.category = category;
     }
 }

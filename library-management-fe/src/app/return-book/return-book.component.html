@@ -1,0 +1,67 @@
+<div class="card p-3 mt-3">
+  <div class="d-flex justify-content-between mb-3">
+    <h5>Returned Book List</h5>
+    <div class="form-group d-flex">
+      <div
+        class="d-flex form-group w-auto form-control align-items-center me-3"
+      >
+        <input
+          type="text"
+          class="form-control rounded border-0 me-3 p-0 rounded-0"
+          placeholder="Search..."
+          [(ngModel)]="filterTerm"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
+        <i class="bi bi-search"></i>
+      </div>
+      <button class="btn btn-primary" routerLink="add">
+        Add Returned Book
+      </button>
+    </div>
+  </div>
+  <table
+    class="table table-striped table-bordered align-middle mb-0 bg-white"
+    cellspacing="0"
+    width="100%"
+  >
+    <thead class="bg-light">
+      <tr>
+        <th class="w-auto">Borrower</th>
+        <th class="w-auto">Phone Number</th>
+        <th class="w-auto">Book</th>
+        <th class="w-auto">Borrow Date</th>
+        <th class="w-auto">Return Date</th>
+        <th class="w-auto">Returned Date</th>
+        <th class="w-auto">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let returnbook of returnbooks | filter: filterTerm">
+        <td>{{ returnbook.borrowing.name }}</td>
+        <td>{{ returnbook.borrowing.phone }}</td>
+        <td>{{ returnbook.borrowing.book.title }}</td>
+        <td>{{ returnbook.borrowing.borrow_date | customDate }}</td>
+        <td>{{ returnbook.borrowing.return_date | customDate }}</td>
+        <td>{{ returnbook.return_date_actual | customDate }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-secondary btn-rounded btn-sm fw-bold me-3"
+            routerLink="edit/{{ returnbook.id }}"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger btn-rounded btn-sm fw-bold"
+            (click)="deleteReturnBook(returnbook.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

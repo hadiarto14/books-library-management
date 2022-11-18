@@ -1,0 +1,56 @@
+<div class="card mb-4 aligns-items-center justify-content-center mt-3">
+  <div class="container p-3">
+    <div class="mb-3">
+      <p class="fs-5" *ngIf="isAddMode">Add New Borrower</p>
+      <p class="fs-5" *ngIf="!isAddMode">Edit Borrower</p>
+      <p>Input your book detail here</p>
+    </div>
+    <form [formGroup]="returnbookForm">
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Borrower</label>
+        <div class="col-sm-10">
+          <select class="form-select" formControlName="borrowing_id">
+            <option [value]="0">-- Select Borrower --</option>
+            <option *ngFor="let borrower of borrowers" [value]="borrower.id">
+              {{ borrower.name }} - {{ borrower.book.title }}
+            </option>
+          </select>
+          <span
+            class="text-danger"
+            *ngIf="
+                      (returnbookForm.get('borrowing_id')!.touched || submitted ) &&
+                      returnbookForm.get('borrowing_id')!.errors?.['required'] || returnbookForm.get('borrowing_id')!.value == 0 
+                    "
+          >
+            Book is required
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Returned Date</label>
+        <div class="col-sm-10 md-outline input-with-post-icon datepicker">
+          <input
+            placeholder="Select date"
+            type="date"
+            id="example"
+            class="form-control"
+            formControlName="return_date_actual"
+          />
+          <span
+            class="text-danger"
+            *ngIf="
+                      (returnbookForm.get('return_date_actual')!.touched || submitted ) &&
+                      returnbookForm.get('return_date_actual')!.errors?.['required']
+                    "
+          >
+            Return Date is required
+          </span>
+        </div>
+      </div>
+    </form>
+    <button class="btn btn-primary float-end" (click)="submit()">Submit</button>
+    <button class="btn btn-secondary float-end me-1" (click)="cancel()">
+      Cancel
+    </button>
+  </div>
+</div>

@@ -1,0 +1,127 @@
+<div class="card mb-4 aligns-items-center justify-content-center mt-3">
+  <div class="container p-3">
+    <div class="mb-3">
+      <p class="fs-5" *ngIf="isAddMode">Add New Book</p>
+      <p class="fs-5" *ngIf="!isAddMode">Edit Book</p>
+      <p>Input your book detail here</p>
+    </div>
+    <form [formGroup]="bookForm">
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="title"
+            placeholder="book title"
+          />
+          <span
+            class="text-danger"
+            *ngIf="
+                      (bookForm.get('title')!.touched || submitted) &&
+                      bookForm.get('title')!.errors?.['required']
+                    "
+          >
+            Title is required
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Author</label>
+        <div class="col-sm-10">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="author"
+            placeholder="author"
+          />
+          <span
+            class="text-danger"
+            *ngIf="
+                      (bookForm.get('author')!.touched || submitted) &&
+                      bookForm.get('author')!.errors?.['required']
+                    "
+          >
+            Author is required
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Image</label>
+        <div class="col-sm-10">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="image"
+            placeholder="book cover url"
+          />
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Rating</label>
+        <div class="col-sm-10">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="rating"
+            placeholder="book rate ex. 3.4"
+          />
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Availability</label>
+        <div class="col-sm-10">
+          <select class="form-select" formControlName="availability">
+            <option [value]="0">-- Select Book Status --</option>
+            <option [value]="true">Available</option>
+            <option [value]="false">Not Available</option>
+          </select>
+          <span
+            class="text-danger"
+            *ngIf="
+                      (bookForm.get('availability')!.touched || submitted ) &&
+                      bookForm.get('availability')!.errors?.['required'] || bookForm.get('availability')!.value == 0 
+                    "
+          >
+            Availability is required
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Category</label>
+        <div class="col-sm-10">
+          <select class="form-select" formControlName="category_id">
+            <option [value]="0">-- Select Category --</option>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+          <span
+            class="text-danger"
+            *ngIf="
+                      (bookForm.get('category_id')!.touched || submitted ) &&
+                      bookForm.get('category_id')!.errors?.['required'] || bookForm.get('category_id')!.value == 0 
+                    "
+          >
+            Category is required
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+          <textarea
+            class="form-control"
+            formControlName="description"
+            placeholder="Johnny Brown"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+    <button class="btn btn-primary float-end" (click)="submit()">Submit</button>
+    <button class="btn btn-secondary float-end me-1" (click)="cancel()">
+      Cancel
+    </button>
+  </div>
+</div>

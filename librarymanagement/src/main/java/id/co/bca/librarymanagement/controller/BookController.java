@@ -1,7 +1,9 @@
 package id.co.bca.librarymanagement.controller;
 
 import id.co.bca.librarymanagement.model.BookModel;
+import id.co.bca.librarymanagement.model.RequestBookModel;
 import id.co.bca.librarymanagement.repository.BookRepository;
+import id.co.bca.librarymanagement.repository.RequestBookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -9,10 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("api")
 public class BookController {
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    RequestBookRepository requestBookRepository;
+
 
     @GetMapping("/books")
     @ResponseStatus(HttpStatus.OK)
@@ -28,20 +35,20 @@ public class BookController {
 
     @PostMapping("/books")
     @ResponseStatus(HttpStatus.OK)
-    public BookModel addBook (@RequestBody BookModel book){
-        return bookRepository.save(book);
+    public RequestBookModel addBook (@RequestBody RequestBookModel book){
+        return requestBookRepository.save(book);
     }
 
     @PutMapping("/books/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookModel updateBook(@RequestBody BookModel book, @PathVariable("id") int id){
+    public RequestBookModel updateBook(@RequestBody RequestBookModel book, @PathVariable("id") int id){
         book.setId(id);
-        return bookRepository.save(book);
+        return requestBookRepository.save(book);
     }
 
     @DeleteMapping("/books/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBaby(@PathVariable("id") int id) {
+    public void deleteBook(@PathVariable("id") int id) {
         bookRepository.deleteById(id);
     }
 }

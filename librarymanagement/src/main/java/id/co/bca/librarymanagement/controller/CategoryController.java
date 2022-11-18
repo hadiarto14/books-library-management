@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("api")
 public class CategoryController {
     @Autowired
@@ -23,13 +24,13 @@ public class CategoryController {
 
     @GetMapping("/categories/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryModel findBookById(@PathVariable("id") int id){
+    public CategoryModel findCategoryById(@PathVariable("id") int id){
         return categoryRepository.findById(id).get();
     }
 
     @PostMapping("/categories")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryModel addBook (@RequestBody CategoryModel category){
+    public CategoryModel addCategory (@RequestBody CategoryModel category){
         return categoryRepository.save(category);
     }
 
@@ -42,7 +43,7 @@ public class CategoryController {
 
     @DeleteMapping("/categories/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteBaby(@PathVariable("id") int id) {
+    public void deleteCategory(@PathVariable("id") int id) {
         categoryRepository.deleteById(id);
     }
 }
