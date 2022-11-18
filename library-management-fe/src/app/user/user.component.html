@@ -1,0 +1,58 @@
+<div class="card p-3 mt-3">
+  <div class="d-flex justify-content-between mb-3">
+    <h4>User List</h4>
+    <div class="form-group d-flex">
+      <div
+        class="d-flex form-group w-auto form-control align-items-center me-3"
+      >
+        <input
+          type="text"
+          class="form-control rounded border-0 me-3 p-0 rounded-0"
+          placeholder="Search..."
+          [(ngModel)]="filterTerm"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
+        <i class="bi bi-search"></i>
+      </div>
+        <button class="btn btn-primary" routerLink="add">Add User</button>
+      </div>
+
+  </div>
+  <table
+    class="table table-striped table-bordered align-middle mb-0 bg-white"
+    cellspacing="0"
+    width="100%"
+  >
+    <thead class="bg-light">
+      <tr>
+        <th class="w-auto">Username</th>
+        <th class="w-75">Role</th>
+        <th class="w-auto">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users | filter: filterTerm">
+        <td>{{ user.username }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-secondary btn-rounded btn-sm fw-bold me-3"
+            routerLink="edit/{{ user.id }}"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger btn-rounded btn-sm fw-bold"
+            (click)="deleteUser(user.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

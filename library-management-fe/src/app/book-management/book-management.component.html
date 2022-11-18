@@ -1,0 +1,60 @@
+<div class="card p-3 mt-3">
+  <div class="d-flex justify-content-between mb-3">
+    <h4>Book List</h4>
+    <div class="form-group d-flex">
+      <div
+        class="d-flex form-group w-auto form-control align-items-center me-3"
+      >
+        <input
+          type="text"
+          class="form-control rounded border-0 me-3 p-0 rounded-0"
+          placeholder="Search..."
+          [(ngModel)]="filterTerm"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+        />
+        <i class="bi bi-search"></i>
+      </div>
+      <button class="btn btn-primary w-auto" routerLink="add">
+        <span>Add Book</span>
+      </button>
+    </div>
+  </div>
+
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Category</th>
+        <th>Rating</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let book of books | filter: filterTerm">
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.category.name }}</td>
+        <td>{{ book.rating }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-secondary btn-rounded btn-sm fw-bold me-3"
+            routerLink="edit/{{ book.id }}"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger btn-rounded btn-sm fw-bold"
+            (click)="deleteBook(book.id)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

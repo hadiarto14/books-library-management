@@ -1,6 +1,10 @@
 package id.co.bca.librarymanagement.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "category")
@@ -15,6 +19,10 @@ public class CategoryModel {
 
     @Column(name = "description")
     private String description;
+
+    @JsonBackReference
+    @OneToMany(mappedBy = "category")
+    private List<BookModel> bookModel;
 
     public int getId() {
         return id;

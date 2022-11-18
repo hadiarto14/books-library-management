@@ -1,0 +1,110 @@
+<div class="card mb-4 aligns-items-center justify-content-center mt-3">
+  <div class="container p-3">
+    <div class="mb-3">
+      <p class="fs-5" *ngIf="isAddMode">Add New Borrower</p>
+      <p class="fs-5" *ngIf="!isAddMode">Edit Borrower</p>
+      <p>Input your book detail here</p>
+    </div>
+    <form [formGroup]="borrowForm">
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="name"
+            placeholder="name"
+          />
+          <span
+            class="text-danger"
+            *ngIf="
+                      (borrowForm.get('name')!.touched || submitted) &&
+                      borrowForm.get('name')!.errors?.['required']
+                    "
+          >
+            Name is required
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Phone</label>
+        <div class="col-sm-10">
+          <input
+            class="form-control"
+            type="text"
+            formControlName="phone"
+            placeholder="phone number"
+          />
+          <span
+            class="text-danger"
+            *ngIf="
+                      (borrowForm.get('phone')!.touched || submitted) &&
+                      borrowForm.get('phone')!.errors?.['required']
+                    "
+          >
+            Phone is required
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Borrow Date</label>
+        <div class="col-sm-10 md-outline input-with-post-icon datepicker">
+          <input
+            placeholder="Select date"
+            type="date"
+            id="example"
+            class="form-control"
+            (change)="updateReturnDate($event)"
+            formControlName="borrow_date"
+          />
+          <span
+            class="text-danger"
+            *ngIf="
+                      (borrowForm.get('borrow_date')!.touched || submitted) &&
+                      borrowForm.get('borrow_date')!.errors?.['required']
+                    "
+          >
+            Borrow Date is required
+          </span>
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Return Date</label>
+        <div class="col-sm-10">
+            <input
+            placeholder="Select date"
+            type="date"
+            id="example"
+            [readonly]="true"
+            class="form-control"
+            formControlName="return_date"
+          />
+        </div>
+      </div>
+      <div class="form-group row mb-3">
+        <label class="col-sm-2 col-form-label">Book</label>
+        <div class="col-sm-10">
+          <select class="form-select" formControlName="book_id">
+            <option [value]="0">-- Select Book --</option>
+            <option *ngFor="let book of books" [value]="book.id">
+              {{ book.title }}
+            </option>
+          </select>
+          <span
+            class="text-danger"
+            *ngIf="
+                      (borrowForm.get('book_id')!.touched || submitted ) &&
+                      borrowForm.get('book_id')!.errors?.['required'] || borrowForm.get('book_id')!.value == 0 
+                    "
+          >
+            Book is required
+          </span>
+        </div>
+      </div>
+    </form>
+    <button class="btn btn-primary float-end" (click)="submit()">Submit</button>
+    <button class="btn btn-secondary float-end me-1" (click)="cancel()">
+      Cancel
+    </button>
+  </div>
+</div>

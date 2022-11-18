@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="col-sm-12 form-group d-flex input-position text-center">
+    <div class="d-flex form-group w-100 form-control mb-3">
+      <input
+        type="text"
+        class="form-control rounded border-0 me-3 p-0 rounded-0"
+        placeholder="Search..."
+        [(ngModel)]="filterTerm"
+        placeholder="Search"
+        aria-label="Search"
+        aria-describedby="search-addon"
+      />
+      <i class="bi bi-search"></i>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+      <div
+        class="col-3 card p-0 m-1 shadow-sm"
+        style="width: 18rem"
+        *ngFor="let book of books | filter: filterTerm"
+      >
+        <div class="item shadow-sm">
+          <ng-template [ngIf]="book.availability" [ngIfElse]="notAvailability">
+            <span class="notify-badge">Available</span>
+          </ng-template>
+          <ng-template #notAvailability>
+            <span class="notify-badge">Not Available</span>
+          </ng-template>
+          <img class="card-img-top" *ngIf="book.image" src="{{ book.image }}" />
+          <img class="card-img-top" *ngIf="!book.image" src='./assets/no-image.png' />
+        <div class="card-body">
+          <h6 class="card-title">
+            <a routerLink="/book/{{ book.id }}">{{ book.title }}</a>
+          </h6>
+          <div class="d-flex justify-content-between">
+            <div>
+              <p class="small text-muted">{{ book.category.name }}</p>
+            </div>
+            <div>
+              <p class="small text-muted">
+                Rated {{ book.rating | number: "1.1-1" }}/5
+              </p>
+            </div>
+          </div>
+          <p class="card-text">{{ book.author }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
